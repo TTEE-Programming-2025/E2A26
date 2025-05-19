@@ -196,41 +196,40 @@ void displayGrades() {
 // 搜尋學生資料
 void searchGrades() {
     clearScreen();
-    if (student_count == 0) {
-        printf("沒有學生資料，請先輸入。\n");
-        pauseScreen();
-        clearScreen();
-        return;
-    }
-
-    char search_name[50];
-    printf("請輸入要搜尋的學生姓名：");
-    getchar();
-    fgets(search_name, sizeof(search_name), stdin);
-    size_t len = strlen(search_name);
-    if (len > 0 && search_name[len-1] == '\n') {
-        search_name[len-1] = '\0';
-    }
-
+    void searchGrades() {
+    char searchName[NAME_LENGTH];
     int found = 0;
-    for (int i = 0; i < student_count; i++) {
-        if (strcmp(students[i].name, search_name) == 0) {
+
+    clearScreen();
+
+    // 提示使用者輸入
+    printf("請輸入要搜尋的學生姓名：");
+
+    // 使用 fgets 讀入整行，並移除換行字元
+    fgets(searchName, sizeof(searchName), stdin);
+    searchName[strcspn(searchName, "\n")] = '\0'; // 移除 \n
+
+    // 搜尋所有學生資料
+    for (int i = 0; i < studentCount; i++) {
+        if (strcmp(students[i].name, searchName) == 0) {
             printf("查詢結果：\n");
             printf("姓名：%s\n", students[i].name);
-            printf("學號：%06d\n", students[i].id);
+            printf("學號：%d\n", students[i].id);
             printf("數學：%d\n", students[i].math);
             printf("物理：%d\n", students[i].physics);
             printf("英文：%d\n", students[i].english);
-            printf("平均成績：%.1f\n", students[i].avg);
+            printf("平均成績：%.1f\n", students[i].average);
             found = 1;
             break;
         }
     }
 
+    // 如果找不到
     if (!found) {
-        printf("查無此學生資料。\n");
+        printf("沒有此學生資料。\n");
     }
 
+    // 等待按鍵後清除畫面
     pauseScreen();
     clearScreen();
 }
