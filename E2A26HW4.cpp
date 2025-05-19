@@ -195,9 +195,7 @@ void displayGrades() {
 
 // 搜尋學生資料
 void searchGrades() {
-    clearScreen();
-    void searchGrades() {
-    char searchName[NAME_LENGTH];
+    char searchName[50];
     int found = 0;
 
     clearScreen();
@@ -210,7 +208,7 @@ void searchGrades() {
     searchName[strcspn(searchName, "\n")] = '\0'; // 移除 \n
 
     // 搜尋所有學生資料
-    for (int i = 0; i < studentCount; i++) {
+    for (int i = 0; i < student_count; i++) {
         if (strcmp(students[i].name, searchName) == 0) {
             printf("查詢結果：\n");
             printf("姓名：%s\n", students[i].name);
@@ -218,7 +216,7 @@ void searchGrades() {
             printf("數學：%d\n", students[i].math);
             printf("物理：%d\n", students[i].physics);
             printf("英文：%d\n", students[i].english);
-            printf("平均成績：%.1f\n", students[i].average);
+            printf("平均成績：%.1f\n", students[i].avg);
             found = 1;
             break;
         }
@@ -226,7 +224,7 @@ void searchGrades() {
 
     // 如果找不到
     if (!found) {
-        printf("沒有此學生資料。\n");
+        printf("查無此學生資料。\n");
     }
 
     // 等待按鍵後清除畫面
