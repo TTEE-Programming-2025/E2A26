@@ -23,6 +23,7 @@ void pauseScreen() {
 }
 
 #define MAX_STUDENTS 10
+#define NAME_LENGTH 50
 
 // 學生結構體
 typedef struct {
@@ -124,49 +125,65 @@ int inputIntInRange(const char* prompt, int min, int max) {
 // 輸入學生資料
 void inputGrades() {
     clearScreen();
-    int n = inputIntInRange("請輸入學生人數 (5~10): ", 5, 10);
+    int n;
+    printf("請輸入學生人數 (5~10): ");
+    while (scanf("%d", &n) != 1 || n < 5 || n > 10) {
+        printf("輸入錯誤，請輸入 5~10 之間的整數: ");
+        while (getchar() != '\n'); // 清除錯誤輸入
+    }
     student_count = n;
+    getchar(); // 吃掉換行符號，避免影響後面 fgets
 
-    for (int i = 0; i < n; i++) {
-        printf("第 %d 位學生資料輸入：\n", i+1);
+    for (int i = 0; i < student_count; i++) {
+        printf("第 %d 位學生資料輸入：\n", i + 1);
 
+        // 姓名
         while (1) {
             printf("姓名：");
-            getchar();
-            fgets(students[i].name, sizeof(students[i].name), stdin);
-            size_t len = strlen(students[i].name);
-            if (len > 0 && students[i].name[len-1] == '\n') {
-                students[i].name[len-1] = '\0';
-            }
+            fgets(students[i].name, NAME_LENGTH, stdin);
+            students[i].name[strcspn(students[i].name, "\n")] = 0; // 移除換行
+
             if (strlen(students[i].name) == 0) {
                 printf("姓名不可為空，請重新輸入。\n");
-                continue;
+            } else {
+                break;
             }
-            break;
         }
 
-        while (1) {
-            printf("學號 (6位數整數)：");
-            if (scanf("%d", &students[i].id) != 1) {
-                printf("輸入錯誤，請輸入6位整數。\n");
-                while(getchar() != '\n');
-                continue;
-            }
-            if (students[i].id < 100000 || students[i].id > 999999) {
-                printf("學號必須是6位數整數。\n");
-                continue;
-            }
-            break;
+        // 學號
+        printf("學號 (6位數整數)：");
+        while (scanf("%d", &students[i].id) != 1 || students[i].id < 100000 || students[i].id > 999999) {
+            printf("輸入錯誤，請輸入 6 位數學號：");
+            while (getchar() != '\n'); // 清空錯誤輸入
         }
 
-        students[i].math = inputIntInRange("數學成績 (0~100)：", 0, 100);
-        students[i].physics = inputIntInRange("物理成績 (0~100)：", 0, 100);
-        students[i].english = inputIntInRange("英文成績 (0~100)：", 0, 100);
+        // 數學成績
+        printf("數學成績 (0~100)：");
+        while (scanf("%d", &students[i].math) != 1 || students[i].math < 0 || students[i].math > 100) {
+            printf("輸入錯誤，請輸入 0~100：");
+            while (getchar() != '\n');
+        }
 
-        students[i].avg = (students[i].math + students[i].physics + students[i].english) / 3.0f;
+        // 物理成績
+        printf("物理成績 (0~100)：");
+        while (scanf("%d", &students[i].physics) != 1 || students[i].physics < 0 || students[i].physics > 100) {
+            printf("輸入錯誤，請輸入 0~100：");
+            while (getchar() != '\n');
+        }
+
+        // 英文成績
+        printf("英文成績 (0~100)：");
+        while (scanf("%d", &students[i].english) != 1 || students[i].english < 0 || students[i].english > 100) {
+            printf("輸入錯誤，請輸入 0~100：");
+            while (getchar() != '\n');
+        }
+
+        // 計算平均
+        students[i].avg = (students[i].math + students[i].physics + students[i].english) / 3.0;
+
+        while (getchar() != '\n'); // 清除多餘換行，準備下一位學生輸入
     }
 
-    printf("學生資料輸入完成！\n");
     pauseScreen();
     clearScreen();
 }
