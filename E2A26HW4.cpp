@@ -28,7 +28,7 @@ int main() {
     int n = 0;
     char choice;
 
-    system("clear"); // Windows 請改用 "cls"
+    system("cls"); // Windows 請改用 "cls"
     welcomeScreen();
     if (!login()) return 0;
 
