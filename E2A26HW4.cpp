@@ -212,13 +212,15 @@ void displayGrades() {
 
 // 搜尋學生資料
 void searchGrades() {
-    char searchName[50];
+    char searchName[NAME_LENGTH];
     int found = 0;
 
     clearScreen();
 
     // 提示使用者輸入
     printf("請輸入要搜尋的學生姓名：");
+	
+	while (getchar() != '\n'); 
 
     // 使用 fgets 讀入整行，並移除換行字元
     fgets(searchName, sizeof(searchName), stdin);
