@@ -175,16 +175,16 @@ void inputGrades() {
 void displayGrades() {
     clearScreen();
     if (student_count == 0) {
-        printf("尚無學生資料，請先輸入。\n");
+        printf("沒有學生資料，請先輸入。\n");
         pauseScreen();
         clearScreen();
         return;
     }
     printf("所有學生資料如下：\n");
-    printf("姓名           學號     數學  物理  英文  平均成績\n");
+    printf("姓名        學號     數學  物理  英文  平均成績\n");
     printf("-------------------------------------------------\n");
     for (int i = 0; i < student_count; i++) {
-        printf("%-14s %06d   %3d   %3d   %3d   %.1f\n",
+        printf("%-14s%06d   %3d   %3d   %3d   %.1f\n",
                students[i].name, students[i].id,
                students[i].math, students[i].physics, students[i].english,
                students[i].avg);
@@ -197,7 +197,7 @@ void displayGrades() {
 void searchGrades() {
     clearScreen();
     if (student_count == 0) {
-        printf("尚無學生資料，請先輸入。\n");
+        printf("沒有學生資料，請先輸入。\n");
         pauseScreen();
         clearScreen();
         return;
@@ -239,7 +239,7 @@ void searchGrades() {
 void gradeRanking() {
     clearScreen();
     if (student_count == 0) {
-        printf("尚無學生資料，請先輸入。\n");
+        printf("沒有學生資料，請先輸入。\n");
         pauseScreen();
         clearScreen();
         return;
